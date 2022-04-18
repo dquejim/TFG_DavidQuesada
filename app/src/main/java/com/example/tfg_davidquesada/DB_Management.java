@@ -31,8 +31,8 @@ public class DB_Management extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //Sentencia para crear nuestra primera tabla
         CREATE_TABLE = "CREATE TABLE " + tbLoginName + "(" +
-                tbLogin_userColumn +"TEXT," +
-                tbLogin_passwordColumn + "TEXT)";
+                tbLogin_userColumn +" TEXT," +
+                tbLogin_passwordColumn + " TEXT)";
 
         sqLiteDatabase.execSQL(CREATE_TABLE);
         //Confirmacion de creado de tabla
@@ -82,4 +82,10 @@ public class DB_Management extends SQLiteOpenHelper{
         //Devolvemos los resultados
         return results;
     }
+
+    /*
+    public void deleteDB(){
+        cContext.deleteDatabase(DB_NAME);
+    }
+    */
 }
