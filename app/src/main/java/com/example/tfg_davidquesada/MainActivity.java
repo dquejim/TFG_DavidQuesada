@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button bRegister;
+    TextView bRegister;
     EditText textName;
     EditText textPassword;
     DB_Management db_management = new DB_Management(this);
@@ -19,8 +20,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
-        bRegister = (Button) findViewById(R.id.registerButton);
+        bRegister = (TextView) findViewById(R.id.bRegister);
         textName = (EditText) findViewById(R.id.textName);
         textPassword = (EditText) findViewById(R.id.textPassword);
 
