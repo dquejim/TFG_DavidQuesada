@@ -33,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(utils.comprobarInternet()){
+                if(utils.comprobarInternet(getBaseContext())){
                     Intent intent = new Intent(MainActivity.this,NewAccountActivity.class);
                     startActivity(intent);
                 }else{
-                    System.out.println("Entrando como invitado");
+                    Intent intent = new Intent(MainActivity.this,Menu_Activity.class);
+                    intent.putExtra("userName"," Invitado001");
+                    startActivity(intent);
                 }
             }
         });
@@ -45,19 +47,18 @@ public class MainActivity extends AppCompatActivity {
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(utils.comprobarInternet()){
+                Intent intent = new Intent(MainActivity.this,Menu_Activity.class);
+
+                if(utils.comprobarInternet(getBaseContext())){
                     String user = textName.getText().toString();
                     String password = textPassword.getText().toString();
-
-                    if(db_management.login_insert(user,password) != -1){
-                        System.out.println("Insertado");
-                    }else{
-                        System.out.println("No insertado");;
-                    }
+                    intent.putExtra("userName",user);
                 }else{
                     System.out.println("Entrando como invitado");
+                    intent.putExtra("userName"," Invitado001");
                 }
 
+                startActivity(intent);
             }
         });
     }

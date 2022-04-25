@@ -14,9 +14,12 @@ public class DB_Management extends SQLiteOpenHelper{
     private static final int CURRENT_VERSION = 1;
     private String CREATE_TABLE = "";
 
+    //Login variables
     private String tbLoginName = "tb_login";
     private String tbLogin_userColumn = "user";
     private String tbLogin_passwordColumn = "password";
+    private String tbLogin_numberColumn = "number";
+    private String tbLogin_adressColumn = "adress";
 
     private Context cContext;
 
@@ -32,7 +35,9 @@ public class DB_Management extends SQLiteOpenHelper{
         //Sentencia para crear nuestra primera tabla
         CREATE_TABLE = "CREATE TABLE " + tbLoginName + "(" +
                 tbLogin_userColumn +" TEXT," +
-                tbLogin_passwordColumn + " TEXT)";
+                tbLogin_passwordColumn +" TEXT," +
+                tbLogin_numberColumn +" TEXT," +
+                tbLogin_adressColumn + " TEXT)";
 
         sqLiteDatabase.execSQL(CREATE_TABLE);
         //Confirmacion de creado de tabla
@@ -44,7 +49,7 @@ public class DB_Management extends SQLiteOpenHelper{
 
     }
 
-    public long login_insert(String user, String password){
+    public long login_insert(String user, String password,String number,String adress){
 
         SQLiteDatabase db = this.getReadableDatabase();
         long query_result = -1;
@@ -54,6 +59,8 @@ public class DB_Management extends SQLiteOpenHelper{
         //Valores a insertar en la tabla
         values.put(tbLogin_userColumn,user);
         values.put(tbLogin_passwordColumn, password);
+        values.put(tbLogin_numberColumn,number);
+        values.put(tbLogin_adressColumn, adress);
 
         //Instruccion para insertar en la tabla, indicando los valores y el nombre de la misma
         query_result = db.insert(tbLoginName,null,values);

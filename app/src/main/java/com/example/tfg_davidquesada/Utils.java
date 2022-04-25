@@ -4,22 +4,23 @@ import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 
 import java.io.IOException;
 
 public class Utils {
 
-    public boolean comprobarInternet(){
-        try{
-            Process p =  java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.es");
-            int valor = p.waitFor();
-            boolean conectado = (valor == 0);
-            return conectado;
+    public boolean comprobarInternet(Context context){
+        boolean connected = false;
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo red = connectivityManager.getActiveNetworkInfo();
+
+        if(red != null && red.isConnected()) {
+            connected = true;
         }
 
-        return false;
+        return connected;
     }
 }
