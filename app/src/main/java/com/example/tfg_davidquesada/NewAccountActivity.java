@@ -1,5 +1,6 @@
 package com.example.tfg_davidquesada;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class NewAccountActivity extends AppCompatActivity {
 
@@ -39,7 +42,9 @@ public class NewAccountActivity extends AppCompatActivity {
                 String adress = textAdressR.getText().toString();
 
                 if(db_management.login_insert(user,password,number,adress) != -1){
-                    System.out.println("Insertado");
+                    new StyleableToast.Builder(NewAccountActivity.this).text("Usuario creado correctamente.") //Texto del Toast y vista del mismo
+                            .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
+                            .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
                 }else{
                     System.out.println("No insertado");;
                 }

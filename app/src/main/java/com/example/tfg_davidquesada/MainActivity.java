@@ -3,12 +3,14 @@ package com.example.tfg_davidquesada;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,10 +54,16 @@ public class MainActivity extends AppCompatActivity {
                 if(utils.comprobarInternet(getBaseContext())){
                     String user = textName.getText().toString();
                     String password = textPassword.getText().toString();
+
+                    new StyleableToast.Builder(MainActivity.this).text("Bienvenido " + user + ".") //Texto del Toast y vista del mismo
+                            .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
+                            .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
+
                     intent.putExtra("userName",user);
+
                 }else{
-                    System.out.println("Entrando como invitado");
                     intent.putExtra("userName"," Invitado001");
+
                 }
 
                 startActivity(intent);
