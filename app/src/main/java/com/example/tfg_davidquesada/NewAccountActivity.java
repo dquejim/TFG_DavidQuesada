@@ -42,7 +42,7 @@ public class NewAccountActivity extends AppCompatActivity {
                 String number = textNumberR.getText().toString();
                 String adress = textAdressR.getText().toString();
 
-                if(db_management.checkUser(user,password,2) == user){
+                if(db_management.checkUser(user,password,2) != null){
                     if(db_management.login_insert(user,password,number,adress) != -1){
                         new StyleableToast.Builder(NewAccountActivity.this).text("Usuario creado correctamente.") //Texto del Toast y vista del mismo
                                 .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto

@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     String user = textName.getText().toString();
                     String password = textPassword.getText().toString();
 
-                    if(db_management.checkUser(user,password,1) == user){
+                    if(db_management.checkUser(user,password,1) != null){
                         new StyleableToast.Builder(MainActivity.this).text("Bienvenido " + user + ".") //Texto del Toast y vista del mismo
                                 .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
                                 .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
