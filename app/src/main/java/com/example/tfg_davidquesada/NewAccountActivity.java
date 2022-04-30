@@ -1,5 +1,6 @@
 package com.example.tfg_davidquesada;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -41,12 +42,20 @@ public class NewAccountActivity extends AppCompatActivity {
                 String number = textNumberR.getText().toString();
                 String adress = textAdressR.getText().toString();
 
-                if(db_management.login_insert(user,password,number,adress) != -1){
-                    new StyleableToast.Builder(NewAccountActivity.this).text("Usuario creado correctamente.") //Texto del Toast y vista del mismo
-                            .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
-                            .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
+                if(db_management.checkUser(user,password,2) == user){
+                    if(db_management.login_insert(user,password,number,adress) != -1){
+                        new StyleableToast.Builder(NewAccountActivity.this).text("Usuario creado correctamente.") //Texto del Toast y vista del mismo
+                                .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
+                                .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
+
+                        Intent intent = new Intent(NewAccountActivity.this,Menu_Activity.class);
+                        intent.putExtra("userName",user);
+                        startActivity(intent);
+                    }
                 }else{
-                    System.out.println("No insertado");;
+                    new StyleableToast.Builder(NewAccountActivity.this).text("El usuario ya existe.") //Texto del Toast y vista del mismo
+                            .backgroundColor(Color.RED).textColor(Color.BLACK) //Fondo y color de texto
+                            .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
                 }
             }
         });

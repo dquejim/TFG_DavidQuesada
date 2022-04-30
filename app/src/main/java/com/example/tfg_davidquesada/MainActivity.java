@@ -55,11 +55,19 @@ public class MainActivity extends AppCompatActivity {
                     String user = textName.getText().toString();
                     String password = textPassword.getText().toString();
 
-                    new StyleableToast.Builder(MainActivity.this).text("Bienvenido " + user + ".") //Texto del Toast y vista del mismo
-                            .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
-                            .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
+                    if(db_management.checkUser(user,password,1) == user){
+                        new StyleableToast.Builder(MainActivity.this).text("Bienvenido " + user + ".") //Texto del Toast y vista del mismo
+                                .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
+                                .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
 
-                    intent.putExtra("userName",user);
+                        intent.putExtra("userName",user);
+                    }else{
+                        new StyleableToast.Builder(MainActivity.this).text("Usuario o contraseña incorrectos.") //Texto del Toast y vista del mismo
+                                .backgroundColor(Color.RED).textColor(Color.BLACK) //Fondo y color de texto
+                                .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
+                    }
+
+
 
                 }else{
                     intent.putExtra("userName"," Invitado001");

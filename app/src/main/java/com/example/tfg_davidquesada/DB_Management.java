@@ -90,6 +90,41 @@ public class DB_Management extends SQLiteOpenHelper{
         return results;
     }
 
+    public String checkUser(String myUser, String myPassword, int option){
+        String result = null;
+        //Nos conectamos a la base de datos
+        SQLiteDatabase db = this.getReadableDatabase();
+        //Indicamos las columnas que queremos obtener en nuetsra consulta
+        String[] cols = new String[]{ tbLogin_userColumn,tbLogin_passwordColumn };
+        //Creamos el cursor con los datos de la consulta, en este caso solo nos devolverá un registro
+        //Esto se debe a que buscamos los datos del usuario por su nombre, y al ser clave primaria no habrá dos usuarios con el mismo nombre
+        Cursor c = db.query(tbLoginName,cols,tbLogin_userColumn+"=?", new String[]{myUser},null,null,null);
+
+        //Si el cursor recoge datos...
+        if(c.moveToFirst()) {
+            String searchedUser = c.getString(0);
+            String searchedPassword = c.getString(1);
+
+            switch (option) {
+                //Para el boton login
+                case 1:
+                    //Si el usuario introducido coinicide con la contraseña, result nos devolverá el usuario
+                    if (searchedUser.equals(myUser) && searchedPassword.equals(myPassword)) {
+                        result = searchedUser;
+                    }
+                    break;
+                //Para el boton register
+                case 2:
+                    //Si el usuario ya existe, nos devolvera su nombre
+                    if (searchedUser.equals(myUser)) {
+                        result = searchedUser;
+                    }
+                    break;
+            }
+        }
+        return result;
+    }
+
     /*
     public void deleteDB(){
         cContext.deleteDatabase(DB_NAME);
