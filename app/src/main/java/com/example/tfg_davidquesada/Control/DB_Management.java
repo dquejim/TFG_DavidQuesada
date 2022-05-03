@@ -1,10 +1,12 @@
-package com.example.tfg_davidquesada;
+package com.example.tfg_davidquesada.Control;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.tfg_davidquesada.models.User;
 
 import java.util.ArrayList;
 
@@ -70,20 +72,19 @@ public class DB_Management extends SQLiteOpenHelper{
 
     }
 
-    public ArrayList<String> getAllData(String searchColumn,String tableName,int columnIndex){
+    public User getUser(String myUser){
         SQLiteDatabase db = this.getReadableDatabase();
-        ArrayList<String> results = new ArrayList<>();
-        String[] columns = new String[]{ searchColumn };
+        User results = null;
+        String[] columns = new String[]{tbLogin_userColumn,tbLogin_passwordColumn,tbLogin_numberColumn,tbLogin_adressColumn};
 
         //Abrimos cursor con todos los resultados de la consulta
-        Cursor cursor = db.query(tableName,columns,null,null,null,null,null);
+        Cursor c = db.query(tbLoginName,columns,tbLogin_userColumn+"=?", new String[]{myUser},null,null,null);
 
         //Si hay datos en nuestro cursor, obtenemos todos los datos de la columna y tabla indicadas
-        if(cursor.moveToFirst()){
+        if(c.moveToFirst()){
             do{
-                String column = cursor.getString(columnIndex);
-                results.add(column);
-            }while(cursor.moveToNext());
+                results = new User(c.getString(0),c.getString(1),c.getString(2),c.getString(3));
+            }while(c.moveToNext());
         }
 
         //Devolvemos los resultados
@@ -91,8 +92,6 @@ public class DB_Management extends SQLiteOpenHelper{
     }
 
     public String checkUser(String myUser, String myPassword, int option){
-
-        System.out.println(getAllData(tbLogin_userColumn,tbLoginName,0));
 
         String result = null;
         //Nos conectamos a la base de datos

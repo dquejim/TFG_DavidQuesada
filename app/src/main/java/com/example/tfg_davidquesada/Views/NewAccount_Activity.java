@@ -1,4 +1,4 @@
-package com.example.tfg_davidquesada;
+package com.example.tfg_davidquesada.Views;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,9 +9,12 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tfg_davidquesada.R;
+import com.example.tfg_davidquesada.Control.DB_Management;
+
 import io.github.muddz.styleabletoast.StyleableToast;
 
-public class NewAccountActivity extends AppCompatActivity {
+public class NewAccount_Activity extends AppCompatActivity {
 
     Button bRegister;
     EditText textNameR;
@@ -44,16 +47,16 @@ public class NewAccountActivity extends AppCompatActivity {
 
                 if( userCheck == null){
                     if(db_management.insertUser(user,password,number,adress) != -1){
-                        new StyleableToast.Builder(NewAccountActivity.this).text("Usuario creado correctamente.") //Texto del Toast y vista del mismo
+                        new StyleableToast.Builder(NewAccount_Activity.this).text("Usuario creado correctamente.") //Texto del Toast y vista del mismo
                                 .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
                                 .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
 
-                        Intent intent = new Intent(NewAccountActivity.this,Menu_Activity.class);
+                        Intent intent = new Intent(NewAccount_Activity.this, Home_Activity.class);
                         intent.putExtra("userName",user);
                         startActivity(intent);
                     }
                 }else{
-                    new StyleableToast.Builder(NewAccountActivity.this).text("El usuario ya existe.") //Texto del Toast y vista del mismo
+                    new StyleableToast.Builder(NewAccount_Activity.this).text("El usuario ya existe.") //Texto del Toast y vista del mismo
                             .backgroundColor(Color.RED).textColor(Color.BLACK) //Fondo y color de texto
                             .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
                     System.out.println(userCheck);

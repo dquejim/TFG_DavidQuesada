@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TFG_DavidQuesada">
         <activity
-            android:name=".MainActivity"
+            android:name=".Views.Login_Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewAccountActivity"></activity>
-        <activity android:name=".Menu_Activity"></activity>
+        <activity android:name=".Views.NewAccount_Activity"></activity>
+        <activity android:name=".Views.Home_Activity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
