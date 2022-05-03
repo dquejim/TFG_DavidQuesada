@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,9 +40,10 @@ public class NewAccountActivity extends AppCompatActivity {
                 String password = textPasswordR.getText().toString();
                 String number = textNumberR.getText().toString();
                 String adress = textAdressR.getText().toString();
+                String userCheck = db_management.checkUser(user,password,2);
 
-                if(db_management.checkUser(user,password,2) != null){
-                    if(db_management.login_insert(user,password,number,adress) != -1){
+                if( userCheck == null){
+                    if(db_management.insertUser(user,password,number,adress) != -1){
                         new StyleableToast.Builder(NewAccountActivity.this).text("Usuario creado correctamente.") //Texto del Toast y vista del mismo
                                 .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
                                 .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
@@ -56,6 +56,7 @@ public class NewAccountActivity extends AppCompatActivity {
                     new StyleableToast.Builder(NewAccountActivity.this).text("El usuario ya existe.") //Texto del Toast y vista del mismo
                             .backgroundColor(Color.RED).textColor(Color.BLACK) //Fondo y color de texto
                             .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
+                    System.out.println(userCheck);
                 }
             }
         });

@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
                                 .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
 
                         intent.putExtra("userName",user);
+                        startActivity(intent);
+
                     }else{
                         new StyleableToast.Builder(MainActivity.this).text("Usuario o contraseña incorrectos.") //Texto del Toast y vista del mismo
                                 .backgroundColor(Color.RED).textColor(Color.BLACK) //Fondo y color de texto
@@ -71,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
                 }else{
                     intent.putExtra("userName"," Invitado001");
-
+                    startActivity(intent);
                 }
 
-                startActivity(intent);
+
             }
         });
     }

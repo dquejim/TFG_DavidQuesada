@@ -40,8 +40,7 @@ public class DB_Management extends SQLiteOpenHelper{
                 tbLogin_adressColumn + " TEXT)";
 
         sqLiteDatabase.execSQL(CREATE_TABLE);
-        //Confirmacion de creado de tabla
-        System.out.println("Tabla login creada");
+
     }
 
     @Override
@@ -49,7 +48,7 @@ public class DB_Management extends SQLiteOpenHelper{
 
     }
 
-    public long login_insert(String user, String password,String number,String adress){
+    public long insertUser(String user, String password, String number, String adress){
 
         SQLiteDatabase db = this.getReadableDatabase();
         long query_result = -1;
@@ -68,6 +67,7 @@ public class DB_Management extends SQLiteOpenHelper{
         db.close();
 
         return query_result;
+
     }
 
     public ArrayList<String> getAllData(String searchColumn,String tableName,int columnIndex){
@@ -91,10 +91,13 @@ public class DB_Management extends SQLiteOpenHelper{
     }
 
     public String checkUser(String myUser, String myPassword, int option){
+
+        System.out.println(getAllData(tbLogin_userColumn,tbLoginName,0));
+
         String result = null;
         //Nos conectamos a la base de datos
         SQLiteDatabase db = this.getReadableDatabase();
-        //Indicamos las columnas que queremos obtener en nuetsra consulta
+        //Indicamos las columnas que queremos obtener en nuestra consulta
         String[] cols = new String[]{ tbLogin_userColumn,tbLogin_passwordColumn };
         //Creamos el cursor con los datos de la consulta, en este caso solo nos devolverá un registro
         //Esto se debe a que buscamos los datos del usuario por su nombre, y al ser clave primaria no habrá dos usuarios con el mismo nombre
@@ -122,6 +125,14 @@ public class DB_Management extends SQLiteOpenHelper{
                     break;
             }
         }
+
+        //Cerramos el cursor
+        if(c != null) {
+            c.close();
+        }
+        //Cerramos la base de datos
+        db.close();
+
         return result;
     }
 
