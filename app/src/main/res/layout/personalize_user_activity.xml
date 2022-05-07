@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <EditText
+        android:id="@+id/textPasswordR2"
+        android:layout_width="296dp"
+        android:layout_height="36dp"
+        android:background="#009688"
+        android:ems="10"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:paddingStart="10sp"
+        android:password="true"
+        android:textAlignment="center"
+        android:textColor="#020202"
+        android:textColorHint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.559" />
+
+    <EditText
+        android:id="@+id/textDireccionR2"
+        android:layout_width="296dp"
+        android:layout_height="36dp"
+        android:background="#009688"
+        android:ems="10"
+        android:hint="Dirección"
+        android:inputType="textPassword"
+        android:paddingStart="10sp"
+        android:password="true"
+        android:textAlignment="center"
+        android:textColor="#020202"
+        android:textColorHint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.732" />
+
+    <Button
+        android:id="@+id/buttonConfirm"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:backgroundTint="#7FCF4F"
+        android:textColor="#FAF8F8"
+        android:textColorHighlight="#553232"
+        android:textColorLink="#985454"
+        app:icon="@drawable/tick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.839"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.846" />
+
+    <EditText
+        android:id="@+id/textNameR2"
+        android:layout_width="298dp"
+        android:layout_height="43dp"
+        android:background="@color/teal_700"
+        android:backgroundTint="#009688"
+        android:ems="10"
+        android:hint="Usuario"
+        android:inputType="textPersonName"
+        android:maxLength="50"
+        android:paddingStart="10sp"
+        android:textAlignment="center"
+        android:textColor="#191919"
+        android:textColorHint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.468" />
+
+    <EditText
+        android:id="@+id/textNumberR2"
+        android:layout_width="296dp"
+        android:layout_height="36dp"
+        android:background="#009688"
+        android:ems="10"
+        android:hint="Teléfono"
+        android:inputType="textPassword"
+        android:paddingStart="10sp"
+        android:password="true"
+        android:textAlignment="center"
+        android:textColor="#020202"
+        android:textColorHint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.644" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="120dp"
+        android:layout_height="128dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.245"
+        app:srcCompat="@drawable/curriculum" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
