@@ -57,21 +57,24 @@ public class PersonalizeUser_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(PersonalizeUser_Activity.this,Home_Activity.class);
                 if(user.getName().equals("Invitado001")){
+                    createToast("No puedes modificar un usuario como invitado!",R.drawable.cross,Color.RED);
                     intent.putExtra("userName",user.getName());
                     startActivity(intent);
                 }else{
                     if(!textPassword.getText().equals(user.getPassword()) || !textNumber.getText().equals(user.getNumber()) || !textAdress.getText().equals(user.getAdress())){
                         db_management.alterUser(textName.getText().toString(), textPassword.getText().toString(), textNumber.getText().toString(), textAdress.getText().toString());
-
-                        new StyleableToast.Builder(PersonalizeUser_Activity.this).text("Usuario modificado correctamente.") //Texto del Toast y vista del mismo
-                                .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
-                                .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
+                        createToast("Usuario modificado correctamente!",R.drawable.tick,Color.GREEN);
                     }
                     intent.putExtra("userName", user.getName());
                     startActivity(intent);
                 }
             }
         });
+    }
 
+    public void createToast(String title, int icon,int backgroundcolor){
+        new StyleableToast.Builder(PersonalizeUser_Activity.this).text(title) //Texto del Toast y vista del mismo
+                .backgroundColor(backgroundcolor).textColor(Color.BLACK) //Fondo y color de texto
+                .iconStart(icon).show(); //Indicamos el icono del toast y lo mostramos
     }
 }

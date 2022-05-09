@@ -64,22 +64,15 @@ public class NewAccount_Activity extends AppCompatActivity {
                         //Si el usuario no existe, lo añade a la BBDD , lanza un toast e inicia el intent
                         if(userCheck == null){
                             if(db_management.insertUser(user,password,number,adress) != -1){
-                                new StyleableToast.Builder(NewAccount_Activity.this).text("Usuario creado correctamente.") //Texto del Toast y vista del mismo
-                                        .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
-                                        .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
-
+                                createToast("Usuario creado correctamente",R.drawable.tick,Color.GREEN);
                                 intent.putExtra("userName",user);
                                 startActivity(intent);
                             }
                         }else{
-                            new StyleableToast.Builder(NewAccount_Activity.this).text("El usuario ya existe.") //Texto del Toast y vista del mismo
-                                    .backgroundColor(Color.RED).textColor(Color.BLACK) //Fondo y color de texto
-                                    .iconStart(R.drawable.cross).show(); //Indicamos el icono del toast y lo mostramos
+                            createToast("El usuario ya existe.",R.drawable.cross,Color.RED);
                         }
                     }else{
-                        new StyleableToast.Builder(NewAccount_Activity.this).text("Debes rellenar todos los campos.") //Texto del Toast y vista del mismo
-                                .backgroundColor(Color.RED).textColor(Color.BLACK) //Fondo y color de texto
-                                .iconStart(R.drawable.cross).show(); //Indicamos el icono del toast y lo mostramos
+                        createToast("Debes rellenar todos los campos.",R.drawable.cross,Color.RED);
                     }
 
                     //Si no dispone de conexion a internet, nos lanza un alertDialog que nos pregunta si queremos iniciar sesion como invitado
@@ -107,7 +100,13 @@ public class NewAccount_Activity extends AppCompatActivity {
                 }
             }
         });
-
         alertDialog.show();
+    }
+
+    //Método para crear Toast personalizados
+    public void createToast(String title, int icon,int backgroundcolor){
+        new StyleableToast.Builder(NewAccount_Activity.this).text(title) //Texto del Toast y vista del mismo
+                .backgroundColor(backgroundcolor).textColor(Color.BLACK) //Fondo y color de texto
+                .iconStart(icon).show(); //Indicamos el icono del toast y lo mostramos
     }
 }

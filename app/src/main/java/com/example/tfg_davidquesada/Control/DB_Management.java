@@ -30,7 +30,6 @@ public class DB_Management extends SQLiteOpenHelper{
         super(context,DB_NAME,null,CURRENT_VERSION);
 
         cContext = context;
-
     }
 
     @Override
@@ -43,9 +42,6 @@ public class DB_Management extends SQLiteOpenHelper{
                 tbLogin_adressColumn + " TEXT)";
 
         sqLiteDatabase.execSQL(CREATE_TABLE);
-
-        //Insertamos en la base de datos el usuario al que nos conectaremos cuando no haya conexión
-        insertUser("Invitado001","","","");
 
     }
 
@@ -93,6 +89,7 @@ public class DB_Management extends SQLiteOpenHelper{
             }while(c.moveToNext());
         }
 
+        db.close();
         //Devolvemos los resultados
         return results;
     }
@@ -151,9 +148,9 @@ public class DB_Management extends SQLiteOpenHelper{
         db.execSQL(update);
         db.close();
     }
-    /*
+
     public void deleteDB(){
         cContext.deleteDatabase(DB_NAME);
     }
-    */
+
 }

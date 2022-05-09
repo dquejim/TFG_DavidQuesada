@@ -14,6 +14,8 @@ import com.example.tfg_davidquesada.models.User;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Home_Activity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class Home_Activity extends AppCompatActivity {
     ImageButton exitButton;
     MapView mapView;
     GoogleMapOptions options = new GoogleMapOptions();
+    BottomNavigationView menu = new BottomNavigationView(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +34,9 @@ public class Home_Activity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         user = db_management.getUser(getIntent().getStringExtra("userName"));
-
         testButton = findViewById(R.id.button2);
         exitButton = findViewById(R.id.exitButton);
+        menu = findViewById(R.id.menu);
 
         options.mapType(GoogleMap.MAP_TYPE_SATELLITE)
                 .compassEnabled(false)

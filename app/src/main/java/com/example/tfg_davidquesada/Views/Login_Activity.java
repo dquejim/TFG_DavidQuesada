@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +43,12 @@ public class Login_Activity extends AppCompatActivity {
         textName = (EditText) findViewById(R.id.textName);
         textPassword = (EditText) findViewById(R.id.textPassword);
 
+        //Comprobamos si el usuario Invitado001 ya existe, si no existe, lo creamos, ya que nos conectaremos a él cuando no dispongamos de conexion
+        if(db_management.checkUser("Invitado001", "", 2) == null){
+            //Insertamos en la base de datos el usuario al que nos conectaremos cuando no haya conexión
+            db_management.insertUser("Invitado001", "user", "333", "Default");
+        }
+
         //Accion al pulsar el botón de registrarse de la pantalla de login
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,27 +73,27 @@ public class Login_Activity extends AppCompatActivity {
                 Intent intent = new Intent(Login_Activity.this, Home_Activity.class);
 
                 //Si disponemos de internet obtenemos el usuario y contraseña introducidos
-                if(utils.comprobarInternet(getBaseContext()) || !textName.getText().toString().isEmpty() || !textPassword.getText().toString().isEmpty()){
-                    String user = textName.getText().toString();
-                    String password = textPassword.getText().toString();
+                if(utils.comprobarInternet(getBaseContext())){
+                    if(!textName.getText().toString().isEmpty() && !textPassword.getText().toString().isEmpty()) {
+                        String user = textName.getText().toString();
+                        String password = textPassword.getText().toString();
 
-                    //Comprobamos si la contraseña pertenece al usuario con la opcion 1 del método checkUser
-                    if(db_management.checkUser(user,password,1) != null){
+                        //Comprobamos si la contraseña pertenece al usuario con la opcion 1 del método checkUser
+                        if (db_management.checkUser(user, password, 1) != null) {
 
-                        //Lanzamos un toast de login correcto
-                        new StyleableToast.Builder(Login_Activity.this).text("Bienvenido " + user + ".") //Texto del Toast y vista del mismo
-                                .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
-                                .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
+                            //Lanzamos un toast de login correcto
+                            createToast("Login correcto!",R.drawable.tick,Color.GREEN);
 
-                        //Iniciamos el intent pasandole el nombre de usuario
-                        intent.putExtra("userName",user);
-                        startActivity(intent);
+                            //Iniciamos el intent pasandole el nombre de usuario
+                            intent.putExtra("userName", user);
+                            startActivity(intent);
 
-                        //Si no coindide la contraseña con el usuario, nos lanza un toast de error
+                            //Si no coindide la contraseña con el usuario, nos lanza un toast de error
+                        } else {
+                           createToast("Usuario o contraseña incorrectos.",R.drawable.cross,Color.RED);
+                        }
                     }else{
-                        new StyleableToast.Builder(Login_Activity.this).text("Usuario o contraseña incorrectos.") //Texto del Toast y vista del mismo
-                                .backgroundColor(Color.RED).textColor(Color.BLACK) //Fondo y color de texto
-                                .iconStart(R.drawable.cross).show(); //Indicamos el icono del toast y lo mostramos
+                        createToast("Usuario o contraseña incorrectos.",R.drawable.cross,Color.RED);
                     }
 
                 //Si no hay conexion a Internet, nos pregunta si queremos conectarnos como usuario
@@ -114,5 +121,12 @@ public class Login_Activity extends AppCompatActivity {
 
         alertDialog.show();
 
+    }
+
+    //Método para crear Toast personalizados
+    public void createToast(String title, int icon,int backgroundcolor){
+        new StyleableToast.Builder(Login_Activity.this).text(title) //Texto del Toast y vista del mismo
+                .backgroundColor(backgroundcolor).textColor(Color.BLACK) //Fondo y color de texto
+                .iconStart(icon).show(); //Indicamos el icono del toast y lo mostramos
     }
 }
