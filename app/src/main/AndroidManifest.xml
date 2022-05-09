@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".Views.NewAccount_Activity"></activity>
         <activity android:name=".Views.Home_Activity"></activity>
+        <activity android:name=".Views.PersonalizeUser_Activity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>

@@ -2,6 +2,8 @@ package com.example.tfg_davidquesada.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,10 +20,12 @@ import io.github.muddz.styleabletoast.StyleableToast;
 
 public class Login_Activity extends AppCompatActivity {
 
+    //Declaración de variables
     TextView bRegister;
     Button bLogin;
     EditText textName;
     EditText textPassword;
+
     DB_Management db_management = new DB_Management(this);
     Utils utils = new Utils();
 
@@ -29,59 +33,86 @@ public class Login_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        //Escondemos el actionBar de la actividad
         getSupportActionBar().hide();
 
+        //"Enlazamos" los componentes graficos con las variables creadas anteriormente
         bRegister = (TextView) findViewById(R.id.bRegister);
         bLogin = (Button) findViewById(R.id.bLogin);
         textName = (EditText) findViewById(R.id.textName);
         textPassword = (EditText) findViewById(R.id.textPassword);
 
+        //Accion al pulsar el botón de registrarse de la pantalla de login
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(utils.comprobarInternet(getBaseContext())){
+                    //Si disponemos de internet, nos enviará a la pantalla de registro de usuario
                     Intent intent = new Intent(Login_Activity.this, NewAccount_Activity.class);
                     startActivity(intent);
+                    //Si no, nos pregunta si queremos entrar como invitado
                 }else{
                     Intent intent = new Intent(Login_Activity.this, Home_Activity.class);
-                    intent.putExtra("userName"," Invitado001");
-                    startActivity(intent);
+                    createAlertDialog("Parece que está sin conexión, ¿desea acceder como invitado?",intent);
                 }
             }
         });
 
+        //Accion del boton de login
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Declaramos un intent hacia la home_activity
                 Intent intent = new Intent(Login_Activity.this, Home_Activity.class);
 
-                if(utils.comprobarInternet(getBaseContext())){
+                //Si disponemos de internet obtenemos el usuario y contraseña introducidos
+                if(utils.comprobarInternet(getBaseContext()) || !textName.getText().toString().isEmpty() || !textPassword.getText().toString().isEmpty()){
                     String user = textName.getText().toString();
                     String password = textPassword.getText().toString();
 
+                    //Comprobamos si la contraseña pertenece al usuario con la opcion 1 del método checkUser
                     if(db_management.checkUser(user,password,1) != null){
+
+                        //Lanzamos un toast de login correcto
                         new StyleableToast.Builder(Login_Activity.this).text("Bienvenido " + user + ".") //Texto del Toast y vista del mismo
                                 .backgroundColor(Color.GREEN).textColor(Color.BLACK) //Fondo y color de texto
                                 .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
 
+                        //Iniciamos el intent pasandole el nombre de usuario
                         intent.putExtra("userName",user);
                         startActivity(intent);
 
+                        //Si no coindide la contraseña con el usuario, nos lanza un toast de error
                     }else{
                         new StyleableToast.Builder(Login_Activity.this).text("Usuario o contraseña incorrectos.") //Texto del Toast y vista del mismo
                                 .backgroundColor(Color.RED).textColor(Color.BLACK) //Fondo y color de texto
-                                .iconStart(R.drawable.tick).show(); //Indicamos el icono del toast y lo mostramos
+                                .iconStart(R.drawable.cross).show(); //Indicamos el icono del toast y lo mostramos
                     }
 
-
-
+                //Si no hay conexion a Internet, nos pregunta si queremos conectarnos como usuario
                 }else{
-                    intent.putExtra("userName"," Invitado001");
-                    startActivity(intent);
+                    createAlertDialog("Parece que está sin conexión, ¿desea acceder como invitado?",intent);
                 }
-
-
             }
         });
+    }
+
+    //Método para crear un alertdialog
+    public void createAlertDialog(String title,Intent intent){
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        final CharSequence[] opciones = {"Si","No"};
+        alertDialog.setTitle(title);
+        alertDialog.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(opciones[i].equals("Si")){
+                    intent.putExtra("userName","Invitado001");
+                    startActivity(intent);
+                }
+            }
+        });
+
+        alertDialog.show();
+
     }
 }

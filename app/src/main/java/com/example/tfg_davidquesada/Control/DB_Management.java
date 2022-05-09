@@ -30,6 +30,7 @@ public class DB_Management extends SQLiteOpenHelper{
         super(context,DB_NAME,null,CURRENT_VERSION);
 
         cContext = context;
+
     }
 
     @Override
@@ -43,6 +44,9 @@ public class DB_Management extends SQLiteOpenHelper{
 
         sqLiteDatabase.execSQL(CREATE_TABLE);
 
+        //Insertamos en la base de datos el usuario al que nos conectaremos cuando no haya conexión
+        insertUser("Invitado001","","","");
+
     }
 
     @Override
@@ -50,6 +54,7 @@ public class DB_Management extends SQLiteOpenHelper{
 
     }
 
+    //Método para insertar un usuario en la BBDD
     public long insertUser(String user, String password, String number, String adress){
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -72,6 +77,7 @@ public class DB_Management extends SQLiteOpenHelper{
 
     }
 
+    //Método pars obtener todos los datos de un usuario
     public User getUser(String myUser){
         SQLiteDatabase db = this.getReadableDatabase();
         User results = null;
@@ -91,6 +97,7 @@ public class DB_Management extends SQLiteOpenHelper{
         return results;
     }
 
+    //Método para verificar si el usuario existe, o si el usuario y la contraseña introducida coinciden
     public String checkUser(String myUser, String myPassword, int option){
 
         String result = null;
@@ -135,6 +142,15 @@ public class DB_Management extends SQLiteOpenHelper{
         return result;
     }
 
+    public void alterUser(String user, String password, String number, String adress){
+        String update = "UPDATE " + tbLoginName + " SET " + tbLogin_passwordColumn + " = '" + password +
+                "' , " + tbLogin_numberColumn + " = '" + number + "' , " + tbLogin_adressColumn + " = '" + adress +
+                "' WHERE " + tbLogin_userColumn + " = '" + user + "' ;";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL(update);
+        db.close();
+    }
     /*
     public void deleteDB(){
         cContext.deleteDatabase(DB_NAME);
