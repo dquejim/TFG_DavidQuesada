@@ -65,22 +65,19 @@ public class Home_Activity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.user_option:
                         intent = new Intent(Home_Activity.this, PersonalizeUser_Activity.class);
-                        overridePendingTransition(0,0);
                         break;
 
                     case R.id.home_option:
                         intent = new Intent(Home_Activity.this, Home_Activity.class);
-                        overridePendingTransition(0,0);
                         break;
 
                     case R.id.food_option:
                         intent = new Intent(Home_Activity.this, Food_Activity.class);
-                        overridePendingTransition(0,0);
                         break;
                 }
 
                 startActivity(intent);
-
+                overridePendingTransition(0,0);
                 return true;
             }
         });

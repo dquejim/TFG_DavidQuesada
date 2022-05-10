@@ -77,7 +77,7 @@ public class PersonalizeUser_Activity extends AppCompatActivity {
         });
 
         bottomNavigationView = findViewById(R.id.menu);
-        bottomNavigationView.setSelectedItemId(R.id.home_option);
+        bottomNavigationView.setSelectedItemId(R.id.user_option);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -86,22 +86,19 @@ public class PersonalizeUser_Activity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.user_option:
                         intent = new Intent(PersonalizeUser_Activity.this, PersonalizeUser_Activity.class);
-                        overridePendingTransition(0,0);
                         break;
 
                     case R.id.home_option:
                         intent = new Intent(PersonalizeUser_Activity.this, Home_Activity.class);
-                        overridePendingTransition(0,0);
                         break;
 
                     case R.id.food_option:
                         intent = new Intent(PersonalizeUser_Activity.this, Food_Activity.class);
-                        overridePendingTransition(0,0);
                         break;
                 }
 
                 startActivity(intent);
-
+                overridePendingTransition(0,0);
                 return true;
             }
         });
