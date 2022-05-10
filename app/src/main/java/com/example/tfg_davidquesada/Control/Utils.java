@@ -5,9 +5,11 @@ import static androidx.core.content.ContextCompat.getSystemService;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 
 import java.io.IOException;
 
@@ -29,4 +31,14 @@ public class Utils {
         return connected;
     }
 
+    public void setPreferences(String content,SharedPreferences sharedPreferences){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user",content);
+        editor.commit();
+    }
+
+    public String getPreferences(SharedPreferences sharedPreferences){
+        String user = sharedPreferences.getString("user","Invitado001");
+        return user;
+    }
 }

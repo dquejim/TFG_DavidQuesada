@@ -3,11 +3,14 @@ package com.example.tfg_davidquesada.Views;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +29,6 @@ public class Login_Activity extends AppCompatActivity {
     Button bLogin;
     EditText textName;
     EditText textPassword;
-
     DB_Management db_management = new DB_Management(this);
     Utils utils = new Utils();
 
@@ -42,6 +44,8 @@ public class Login_Activity extends AppCompatActivity {
         bLogin = (Button) findViewById(R.id.bLogin);
         textName = (EditText) findViewById(R.id.textName);
         textPassword = (EditText) findViewById(R.id.textPassword);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
 
         //Comprobamos si el usuario Invitado001 ya existe, si no existe, lo creamos, ya que nos conectaremos a él cuando no dispongamos de conexion
         if(db_management.checkUser("Invitado001", "", 2) == null){
@@ -85,7 +89,7 @@ public class Login_Activity extends AppCompatActivity {
                             createToast("Login correcto!",R.drawable.tick,Color.GREEN);
 
                             //Iniciamos el intent pasandole el nombre de usuario
-                            intent.putExtra("userName", user);
+                            utils.setPreferences(user,sharedPreferences);
                             startActivity(intent);
 
                             //Si no coindide la contraseña con el usuario, nos lanza un toast de error
@@ -106,6 +110,7 @@ public class Login_Activity extends AppCompatActivity {
 
     //Método para crear un alertdialog
     public void createAlertDialog(String title,Intent intent){
+        SharedPreferences sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         final CharSequence[] opciones = {"Si","No"};
         alertDialog.setTitle(title);
@@ -113,7 +118,7 @@ public class Login_Activity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(opciones[i].equals("Si")){
-                    intent.putExtra("userName","Invitado001");
+                    utils.setPreferences("Invitado001",sharedPreferences);
                     startActivity(intent);
                 }
             }

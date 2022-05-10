@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home_Activity">
+
+    <activity
+        android:id="@+id/home_Activity"
+        android:name="com.example.tfg_davidquesada.Views.Home_Activity"
+        android:label="Home_Activity" />
+    <activity
+        android:id="@+id/personalizeUser_Activity"
+        android:name="com.example.tfg_davidquesada.Views.PersonalizeUser_Activity"
+        android:label="PersonalizeUser_Activity" />
+    <activity
+        android:id="@+id/food_Activity"
+        android:name="com.example.tfg_davidquesada.Views.Food_Activity"
+        android:label="Food_Activity" />
+</navigation>
