@@ -17,15 +17,16 @@ import com.example.tfg_davidquesada.models.User;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class Home_Activity extends AppCompatActivity {
+public class Home_Activity extends AppCompatActivity implements OnMapReadyCallback {
 
     DB_Management db_management = new DB_Management(this);
     User user;
     ImageButton exitButton;
-    MapView mapView;
+
     Utils utils = new Utils();
     BottomNavigationView bottomNavigationView;
     GoogleMapOptions options = new GoogleMapOptions();
@@ -43,8 +44,6 @@ public class Home_Activity extends AppCompatActivity {
                 .compassEnabled(false)
                 .rotateGesturesEnabled(false)
                 .tiltGesturesEnabled(false);
-
-        mapView = new MapView(this,options);
 
         exitButton = findViewById(R.id.exitButton);
         exitButton.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +83,11 @@ public class Home_Activity extends AppCompatActivity {
 
 
 
+
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
 
     }
 }

@@ -8,20 +8,26 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.tfg_davidquesada.models.User;
 
-import java.util.ArrayList;
-
 
 public class DB_Management extends SQLiteOpenHelper{
     private static final String DB_NAME = "db_tfg";
     private static final int CURRENT_VERSION = 1;
-    private String CREATE_TABLE = "";
+    private String CREATE_TABLE_LOGIN = "";
+    private String CREATE_TABLE_OFFER = "";
 
     //Login variables
-    private String tbLoginName = "tb_login";
+    private String tableLogin = "login_table";
     private String tbLogin_userColumn = "user";
     private String tbLogin_passwordColumn = "password";
     private String tbLogin_numberColumn = "number";
     private String tbLogin_adressColumn = "adress";
+
+    //Ofertas variables
+    private String tableOffer = "offer_table";
+    private String tbOffer_idColumn= "id";
+    private String tbOffer_nameColumn = "name";
+    private String tbOffer_dayColumn = "week_day";
+    private String tbOffer_priceColumn = "price";
 
     private Context cContext;
 
@@ -35,13 +41,22 @@ public class DB_Management extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //Sentencia para crear nuestra primera tabla
-        CREATE_TABLE = "CREATE TABLE " + tbLoginName + "(" +
+        CREATE_TABLE_LOGIN = "CREATE TABLE " + tableLogin + "(" +
                 tbLogin_userColumn +" TEXT," +
                 tbLogin_passwordColumn +" TEXT," +
                 tbLogin_numberColumn +" TEXT," +
                 tbLogin_adressColumn + " TEXT)";
 
-        sqLiteDatabase.execSQL(CREATE_TABLE);
+        CREATE_TABLE_OFFER = "CREATE TABLE " + tableLogin + "(" +
+                tbOffer_idColumn +" TEXT," +
+                tbOffer_nameColumn +" TEXT," +
+                tbOffer_dayColumn +" TEXT," +
+                tbOffer_priceColumn + " TEXT)";
+
+
+        sqLiteDatabase.execSQL(CREATE_TABLE_LOGIN);
+        sqLiteDatabase.execSQL(CREATE_TABLE_OFFER);
+
 
     }
 
@@ -65,7 +80,9 @@ public class DB_Management extends SQLiteOpenHelper{
         values.put(tbLogin_adressColumn, adress);
 
         //Instruccion para insertar en la tabla, indicando los valores y el nombre de la misma
-        query_result = db.insert(tbLoginName,null,values);
+        query_result = db.insert(tableLogin,null,values);
+
+        insertAllOffers();
 
         db.close();
 
@@ -80,7 +97,7 @@ public class DB_Management extends SQLiteOpenHelper{
         String[] columns = new String[]{tbLogin_userColumn,tbLogin_passwordColumn,tbLogin_numberColumn,tbLogin_adressColumn};
 
         //Abrimos cursor con todos los resultados de la consulta
-        Cursor c = db.query(tbLoginName,columns,tbLogin_userColumn+"=?", new String[]{myUser},null,null,null);
+        Cursor c = db.query(tableLogin,columns,tbLogin_userColumn+"=?", new String[]{myUser},null,null,null);
 
         //Si hay datos en nuestro cursor, obtenemos todos los datos de la columna y tabla indicadas
         if(c.moveToFirst()){
@@ -104,7 +121,7 @@ public class DB_Management extends SQLiteOpenHelper{
         String[] cols = new String[]{ tbLogin_userColumn,tbLogin_passwordColumn };
         //Creamos el cursor con los datos de la consulta, en este caso solo nos devolverá un registro
         //Esto se debe a que buscamos los datos del usuario por su nombre, y al ser clave primaria no habrá dos usuarios con el mismo nombre
-        Cursor c = db.query(tbLoginName,cols,tbLogin_userColumn+"=?", new String[]{myUser},null,null,null);
+        Cursor c = db.query(tableLogin,cols,tbLogin_userColumn+"=?", new String[]{myUser},null,null,null);
 
         //Si el cursor recoge datos...
         if(c.moveToFirst()) {
@@ -140,7 +157,7 @@ public class DB_Management extends SQLiteOpenHelper{
     }
 
     public void alterUser(String user, String password, String number, String adress){
-        String update = "UPDATE " + tbLoginName + " SET " + tbLogin_passwordColumn + " = '" + password +
+        String update = "UPDATE " + tableLogin + " SET " + tbLogin_passwordColumn + " = '" + password +
                 "' , " + tbLogin_numberColumn + " = '" + number + "' , " + tbLogin_adressColumn + " = '" + adress +
                 "' WHERE " + tbLogin_userColumn + " = '" + user + "' ;";
 
@@ -153,4 +170,46 @@ public class DB_Management extends SQLiteOpenHelper{
         cContext.deleteDatabase(DB_NAME);
     }
 
+    private long insertOfferData(String id,String name,String day,String price){
+        SQLiteDatabase db = this.getReadableDatabase();
+        long query_result = -1;
+
+        ContentValues values = new ContentValues();
+
+        //Valores a insertar en la tabla
+        values.put(tbOffer_idColumn,id);
+        values.put(tbOffer_nameColumn, name);
+        values.put(tbOffer_dayColumn,day);
+        values.put(tbOffer_priceColumn, price);
+
+        //Instruccion para insertar en la tabla, indicando los valores y el nombre de la misma
+        query_result = db.insert(tableOffer,null,values);
+
+        db.close();
+
+        return query_result;
+    }
+
+    private void insertAllOffers(){
+        insertOfferData("L101","Ensalada césar \n Pollo asado","1","12€");
+        insertOfferData("L102","Ración de patatas frita \n Sandwich completo","1","6.5€");
+
+        insertOfferData("M101","Hamburguesa completa \n Postre a elegir","2","12€");
+        insertOfferData("M102","Ración de patatas frita \n Pollo asado","2","10€");
+
+        insertOfferData("X101","Pizza volcán \n Refresco 1L","3","11€");
+        insertOfferData("X102","Patata asada tropical \n Helado a elegir","3","8€");
+
+        insertOfferData("J101","Aros de cebolla 10 u. \n Alitas de pollo","4","7.5€");
+        insertOfferData("J102","Tempura de verduras \n Pops de pollo 10 u.","4","7.5€");
+
+        insertOfferData("V101","Pizza trufada \n Refresco 1L","5","12€");
+        insertOfferData("V102","Rolling flamenco \n Postre a elegir","5","6€");
+
+        insertOfferData("S101","Ensalada mixta \n Bocadillo de jamón asado","6","12€");
+        insertOfferData("S102","Patata asada rusa \n Lata de refresco","6","5€");
+
+        insertOfferData("D101","Pizza andaluza \n Lambrusco","7","18€");
+        insertOfferData("D102","Nuggets de pollo 20 u. \n Ración de patatas fritas","7","10€");
+    }
 }
