@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.tfg_davidquesada.Control.DB_Management;
 import com.example.tfg_davidquesada.Control.Utils;
 import com.example.tfg_davidquesada.R;
+import com.example.tfg_davidquesada.models.Offer;
 import com.example.tfg_davidquesada.models.User;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -21,7 +23,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class Home_Activity extends AppCompatActivity implements OnMapReadyCallback {
+import java.util.ArrayList;
+
+public class Home_Activity extends AppCompatActivity{
 
     DB_Management db_management = new DB_Management(this);
     User user;
@@ -30,6 +34,9 @@ public class Home_Activity extends AppCompatActivity implements OnMapReadyCallba
     Utils utils = new Utils();
     BottomNavigationView bottomNavigationView;
     GoogleMapOptions options = new GoogleMapOptions();
+
+
+    TextView prueba;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,13 +88,9 @@ public class Home_Activity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
-
-
-
+        prueba = findViewById(R.id.vistaPrueba);
+        ArrayList<Offer> ofertas = db_management.getOffers("1");
+        prueba.setText(ofertas.get(0).getName());
     }
 
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-
-    }
 }

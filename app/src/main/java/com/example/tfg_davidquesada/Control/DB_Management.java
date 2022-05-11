@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.tfg_davidquesada.models.Offer;
 import com.example.tfg_davidquesada.models.User;
+
+import java.util.ArrayList;
 
 
 public class DB_Management extends SQLiteOpenHelper{
@@ -47,7 +50,7 @@ public class DB_Management extends SQLiteOpenHelper{
                 tbLogin_numberColumn +" TEXT," +
                 tbLogin_adressColumn + " TEXT)";
 
-        CREATE_TABLE_OFFER = "CREATE TABLE " + tableLogin + "(" +
+        CREATE_TABLE_OFFER = "CREATE TABLE " + tableOffer + "(" +
                 tbOffer_idColumn +" TEXT," +
                 tbOffer_nameColumn +" TEXT," +
                 tbOffer_dayColumn +" TEXT," +
@@ -190,26 +193,50 @@ public class DB_Management extends SQLiteOpenHelper{
         return query_result;
     }
 
+    //Método pars obtener todos los datos de una oferta
+    public ArrayList<Offer> getOffers(String weekDay){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Offer> results= new ArrayList<>();
+        Offer offers = null;
+        String[] columns = new String[]{tbOffer_idColumn,tbOffer_nameColumn,tbOffer_dayColumn,tbOffer_priceColumn};
+
+        //Abrimos cursor con todos los resultados de la consulta
+        Cursor c = db.query(tableOffer,columns,tbOffer_dayColumn+"=?", new String[]{weekDay},null,null,null);
+
+        //Si hay datos en nuestro cursor, obtenemos todos los datos de la columna y tabla indicadas
+        if(c.moveToFirst()){
+            do{
+                offers = new Offer(c.getString(0),c.getString(1),c.getString(2),c.getString(3));
+                results.add(offers);
+            }while(c.moveToNext());
+        }
+
+        db.close();
+
+        //Devolvemos los resultados
+        return results;
+    }
+
     private void insertAllOffers(){
-        insertOfferData("L101","Ensalada césar \n Pollo asado","1","12€");
-        insertOfferData("L102","Ración de patatas frita \n Sandwich completo","1","6.5€");
+        insertOfferData("L101","Ensalada césar \nPollo asado","1","12€");
+        insertOfferData("L102","Ración de patatas frita \nSandwich completo","1","6.5€");
 
-        insertOfferData("M101","Hamburguesa completa \n Postre a elegir","2","12€");
-        insertOfferData("M102","Ración de patatas frita \n Pollo asado","2","10€");
+        insertOfferData("M101","Hamburguesa completa \nPostre a elegir","2","12€");
+        insertOfferData("M102","Ración de patatas frita \nPollo asado","2","10€");
 
-        insertOfferData("X101","Pizza volcán \n Refresco 1L","3","11€");
-        insertOfferData("X102","Patata asada tropical \n Helado a elegir","3","8€");
+        insertOfferData("X101","Pizza volcán \nRefresco 1L","3","11€");
+        insertOfferData("X102","Patata asada tropical \nHelado a elegir","3","8€");
 
-        insertOfferData("J101","Aros de cebolla 10 u. \n Alitas de pollo","4","7.5€");
-        insertOfferData("J102","Tempura de verduras \n Pops de pollo 10 u.","4","7.5€");
+        insertOfferData("J101","Aros de cebolla 10 u. \nAlitas de pollo","4","7.5€");
+        insertOfferData("J102","Tempura de verduras \nPops de pollo 10 u.","4","7.5€");
 
-        insertOfferData("V101","Pizza trufada \n Refresco 1L","5","12€");
-        insertOfferData("V102","Rolling flamenco \n Postre a elegir","5","6€");
+        insertOfferData("V101","Pizza trufada \nRefresco 1L","5","12€");
+        insertOfferData("V102","Rolling flamenco \nPostre a elegir","5","6€");
 
-        insertOfferData("S101","Ensalada mixta \n Bocadillo de jamón asado","6","12€");
-        insertOfferData("S102","Patata asada rusa \n Lata de refresco","6","5€");
+        insertOfferData("S101","Ensalada mixta \nBocadillo de jamón asado","6","12€");
+        insertOfferData("S102","Patata asada rusa \nLata de refresco","6","5€");
 
-        insertOfferData("D101","Pizza andaluza \n Lambrusco","7","18€");
-        insertOfferData("D102","Nuggets de pollo 20 u. \n Ración de patatas fritas","7","10€");
+        insertOfferData("D101","Pizza andaluza \nLambrusco","7","18€");
+        insertOfferData("D102","Nuggets de pollo 20 u. \nRación de patatas fritas","7","10€");
     }
 }
