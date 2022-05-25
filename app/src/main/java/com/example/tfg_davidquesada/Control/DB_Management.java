@@ -10,9 +10,10 @@ import com.example.tfg_davidquesada.models.Offer;
 import com.example.tfg_davidquesada.models.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class DB_Management extends SQLiteOpenHelper{
+public class    DB_Management extends SQLiteOpenHelper{
     private static final String DB_NAME = "db_tfg";
     private static final int CURRENT_VERSION = 1;
     private String CREATE_TABLE_LOGIN = "";
@@ -194,7 +195,7 @@ public class DB_Management extends SQLiteOpenHelper{
     }
 
     //Método pars obtener todos los datos de una oferta
-    public ArrayList<Offer> getOffers(String weekDay){
+    public List<Offer> getOffers(String weekDay){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Offer> results= new ArrayList<>();
         Offer offers = null;

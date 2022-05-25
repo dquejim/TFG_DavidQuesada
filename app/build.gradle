@@ -41,5 +41,4 @@ dependencies {
 
     //Biblioteca externa StyleableToast
     implementation 'io.github.muddz:styleabletoast:2.4.0'
-
 }

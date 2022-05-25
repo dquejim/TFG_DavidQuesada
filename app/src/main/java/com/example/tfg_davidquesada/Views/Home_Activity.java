@@ -2,6 +2,7 @@ package com.example.tfg_davidquesada.Views;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tfg_davidquesada.Control.DB_Management;
 import com.example.tfg_davidquesada.Control.Utils;
@@ -29,14 +32,12 @@ public class Home_Activity extends AppCompatActivity{
 
     DB_Management db_management = new DB_Management(this);
     User user;
+    TextView userNameView;
     ImageButton exitButton;
+    ImageButton fakeMapsView;
 
     Utils utils = new Utils();
     BottomNavigationView bottomNavigationView;
-    GoogleMapOptions options = new GoogleMapOptions();
-
-
-    TextView prueba;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +47,8 @@ public class Home_Activity extends AppCompatActivity{
 
         SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
         user = db_management.getUser(utils.getPreferences(sharedPreferences));
-
-        options.mapType(GoogleMap.MAP_TYPE_SATELLITE)
-                .compassEnabled(false)
-                .rotateGesturesEnabled(false)
-                .tiltGesturesEnabled(false);
+        userNameView = findViewById(R.id.userNameView);
+        userNameView.setText("Bienvenido " + user.getName()+ "!");
 
         exitButton = findViewById(R.id.exitButton);
         exitButton.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +56,18 @@ public class Home_Activity extends AppCompatActivity{
             public void onClick(View view) {
                 Intent intent = new Intent(Home_Activity.this,Login_Activity.class);
                 startActivity(intent);
+            }
+        });
+
+        fakeMapsView = findViewById(R.id.fakeMapView);
+        fakeMapsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(utils.comprobarInternet(getBaseContext())) {
+                    Uri _link = Uri.parse("https://goo.gl/maps/5MdAZttVLEe5jzr5A");
+                    Intent i = new Intent(Intent.ACTION_VIEW, _link);
+                    startActivity(i);
+                }
             }
         });
 
@@ -87,10 +97,8 @@ public class Home_Activity extends AppCompatActivity{
                 return true;
             }
         });
-
-        prueba = findViewById(R.id.vistaPrueba);
-        ArrayList<Offer> ofertas = db_management.getOffers("1");
-        prueba.setText(ofertas.get(0).getName());
     }
+
+
 
 }

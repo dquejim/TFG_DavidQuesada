@@ -44,7 +44,7 @@ public class NewAccount_Activity extends AppCompatActivity {
         textNameR = (EditText) findViewById(R.id.textNameR);
         textPasswordR = (EditText) findViewById(R.id.textPasswordR);
         textNumberR = (EditText) findViewById(R.id.textNumberR);
-        textAdressR = (EditText) findViewById(R.id.textDireccionR);
+        textAdressR = (EditText) findViewById(R.id.textAdressR);
 
         SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
 
